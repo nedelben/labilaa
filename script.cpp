@@ -1,0 +1,35 @@
+# كود معقد بلغة Haskell
+
+import Data.List
+import System.Random
+
+randomList :: Int -> IO [Int]
+randomList n = do
+    g <- newStdGen
+    return $ take n (randomRs (1, 100) g)
+
+countOccurrences :: (Ord a) => [a] -> [(a, Int)]
+countOccurrences xs = map (\x -> (head x, length x)) $ group $ sort xs
+
+transformList :: [Int] -> [Int] -> [Int]
+transformList xs ys = zipWith (+) xs (cycle ys)
+
+computeWeightedSum :: [Int] -> [Int] -> Int
+computeWeightedSum xs ys = sum $ zipWith (*) xs (cycle ys)
+
+main :: IO ()
+main = do
+    nums <- randomList 10
+    let pattern = [x * x | x <- [1..10]]
+    
+    putStrLn "Original List:"
+    print nums
+    
+    putStrLn "Sorted Frequency Count:"
+    print $ sortBy (\(_, a) (_, b) -> compare b a) (countOccurrences nums)
+    
+    putStrLn "Transformed List:"
+    print $ transformList nums [1, 2, 3]
+    
+    putStrLn "Computed Weighted Sum:"
+    print $ computeWeightedSum nums pattern
