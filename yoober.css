@@ -9,6 +9,7 @@ body {
   }
   h2{
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      translate:no;
   }
   .container {
     position: absolute;
